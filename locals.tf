@@ -14,6 +14,10 @@ locals {
       short = "stg"
       long  = "staging"
     },
+    performance = {
+      short = "perf"
+      long  = "performance"
+    },
     production = {
       short = "prod"
       long  = "production"
@@ -23,13 +27,13 @@ locals {
       long  = "test"
     }
   }
-  application_domain_name = format("%s-%s", local.selected_environment["short"], var.application)
-  selected_environment    = local.environments[var.environment]
+  environment             = local.environments[var.environment]
+  application_domain_name = format("%s-%s", local.environment["short"], var.application)
   subdomains              = { for subdomain in var.subdomains : subdomain["name"] => subdomain if subdomain["enabled"] == true }
   tags = merge(var.tags, var.tags_overwritten, {
     Environment      = var.environment
-    EnvironmentLong  = local.selected_environment["long"]
-    EnvironmentShort = local.selected_environment["short"]
+    EnvironmentLong  = local.environment["long"]
+    EnvironmentShort = local.environment["short"]
     Name             = local.application_domain_name,
   })
   zone_private = {

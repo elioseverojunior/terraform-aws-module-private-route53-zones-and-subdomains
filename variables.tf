@@ -17,12 +17,13 @@ variable "environment" {
   validation {
     condition = anytrue([
       var.environment == "development",
+      var.environment == "performance",
       var.environment == "production",
       var.environment == "sandbox",
       var.environment == "staging",
       var.environment == "test"
     ])
-    error_message = "Must be a valid environment, can be production, staging, development, test or sandbox."
+    error_message = "Must be a valid environment, can be production, performance, staging, development, test or sandbox."
   }
 }
 
